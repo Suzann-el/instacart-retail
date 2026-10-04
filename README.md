@@ -30,12 +30,10 @@ python -m retail build    # modèle + graphiques + exports CSV Power BI
 pytest tests/             # suite de tests
 ```
 
-> Les données Instacart nécessitent une inscription Kaggle (gratuit) et ne sont pas redistribuables.
-> `data/raw/` est ignoré par git.
 
-## Résultats (données synthétiques — à remplacer avec les vrais fichiers Instacart)
+## Résultats 
 
-Sur les vraies données Instacart (résultats de référence) :
+Sur les données Instacart  :
 - **Taux de réachat global** : ~59% — 3 articles sur 5 sont des répétitions
 - **Panier moyen** : ~10 articles par commande
 - **Pareto** : top 10% des produits = ~40% des commandes
@@ -71,24 +69,11 @@ tests/                     suite de tests
 - **Pas de prix dans Instacart** : les analyses portent sur les volumes et comportements.
   Le taux de réachat remplace le montant comme proxy de valeur et de satisfaction.
 - **SQL d'abord** : toute la logique métier est en SQL DuckDB, lisible et auditable.
-- **Segmentation sans K-Means** : NTILE(4) sur Fréquence, Fidélité et Intervalle — plus
-  interprétable, plus robuste, plus facile à défendre en entretien qu'un clustering.
+- **Segmentation sans K-Means** : NTILE(4) sur Fréquence, Fidélité et Intervalle.
 - **Cross-selling au niveau département** plutôt que produit : les associations produit-produit
   sont trop nombreuses et trop instables ; le niveau département donne des insights actionnables
   pour le merchandising.
 
-## Lien avec le poste
 
-Ce projet illustre directement les missions décrites dans l'offre :
-- **"Données clients, caisses"** → `fact_order_lines` est l'équivalent de vos données de caisse
-- **"Assortiments"** → analyse longue traîne, performance par rayon
-- **"Promotions"** → le taux de réachat avant/après est le KPI d'impact promo
-- **"Dashboards Power BI"** → exports CSV + guide DAX prêts à l'emploi
-- **"Culture Data auprès des métiers"** → notebook pédagogique, graphiques commentés
 
-## Présenter ce projet en entretien
 
-> Analyse comportementale sur 3M+ commandes grocery (Instacart) : modèle en étoile DuckDB,
-> segmentation client en 5 profils FM sans K-Means (interprétable et défendable),
-> analyse cross-selling orientée merchandising, et exports Power BI directement exploitables
-> par les équipes métier. Taux de réachat comme proxy d'impact promotionnel.
