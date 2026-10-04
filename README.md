@@ -19,6 +19,7 @@ produits qui fidélisent, segmenter les clients et détecter les opportunités d
 | 6. Cross-selling | Associations de départements dans un même panier — guide merchandising |
 | 7. Rétention | Courbe de rétention par numéro de commande |
 | 8. Power BI | 14 exports CSV + guide DAX avec 8 mesures prêtes à l'emploi |
+| 9. Snowflake | Migration cloud : staging COPY INTO, modèle analytique, 7 vues de reporting connectées à Power BI |
 
 ## Démarrage rapide
 
@@ -62,7 +63,25 @@ notebooks/
 powerbi/
   guide_powerbi.md         modèle de données, 8 mesures DAX, 4 pages recommandées
 tests/                     suite de tests
+ snowflake/
+
 ```
+## Snowflake (cloud)
+
+Le même pipeline tourne sur Snowflake — scripts dans `snowflake/` :
+
+| Script | Contenu |
+|---|---|
+| `01_setup.sql` | Warehouse `RETAIL_WH`, database `INSTACART_DB`, 3 schemas |
+| `02_staging.sql` | Chargement via `COPY INTO` depuis un stage interne |
+| `03_model.sql` | Modèle analytique : `FACT_ORDER_LINES`, dimensions |
+| `04_reporting.sql` | 7 vues de reporting connectables à Power BI |
+| `05_quality.sql` | Contrôles qualité + monitoring (`QUERY_HISTORY`) |
+
+**Différences DuckDB → Snowflake** : `read_csv()` → `COPY INTO` depuis un stage,
+`RATIO_TO_REPORT()` pour les parts de marché, `CLUSTER BY` pour l'optimisation,
+result cache automatique pour les dashboards Power BI.
+
 
 ## Choix méthodologiques
 
